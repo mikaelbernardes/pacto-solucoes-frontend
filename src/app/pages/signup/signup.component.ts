@@ -32,8 +32,8 @@ export class SignupComponent {
   registerForm!: FormGroup;
 	hidePassword = true;
 	userTypes = [
-		{ value: 'candidate', label: 'Candidato' },
-		{ value: 'recruiter', label: 'Recrutador' }
+		{ value: 'CANDIDATE', label: 'Candidato' },
+		{ value: 'RECRUITER', label: 'Recrutador' }
 	];
 	constructor(
 		private router: Router,
@@ -57,11 +57,13 @@ export class SignupComponent {
 
 	submit() {
 		if (this.registerForm.valid) {
-			console.log('Tipo de usuário selecionado:', this.registerForm.get('userType')?.value);
 			this.loginService
-				.login(this.registerForm.value.login, this.registerForm.value.password)
+				.signup(this.registerForm.value.name, this.registerForm.value.login, this.registerForm.value.password, this.registerForm.value.userType)
 				.subscribe({
-					next: () => this.toastService.success("Sucesso ao cadastrar"),
+					next: () => {
+            this.router.navigate(["/login"]);
+            this.toastService.success("Sucesso ao cadastrar")
+          },
 					error: () => this.toastService.error("Erro ao cadastrar"),
 				});
 		}

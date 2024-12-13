@@ -6,9 +6,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from "@angular/forms";
-// biome-ignore lint/style/useImportType: <explanation>
 import { Router } from "@angular/router";
-// biome-ignore lint/style/useImportType: <explanation>
 import { LoginService } from "../../services/login.service";
 import { ToastrService } from "ngx-toastr";
 import {MatInputModule} from '@angular/material/input';
@@ -46,7 +44,10 @@ export class LoginComponent {
 		this.loginService
 			.login(this.loginForm.value.login, this.loginForm.value.password)
 			.subscribe({
-				next: () => this.toastService.success("Sucesso ao logar"),
+				next: () => {
+          this.router.navigate(["/home"])
+          this.toastService.success("Sucesso ao logar")
+        },
 				error: () => this.toastService.error("Erro ao logar"),
 			});
 	}
