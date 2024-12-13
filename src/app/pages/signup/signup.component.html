@@ -1,7 +1,41 @@
-<app-login-layout title="Cadastrar" description="Cadastre-se com seus dados" primaryButton="Cadastrar" secondaryButton="Logar" (submit)="submit()" (navigate)="navigate()">
+<app-login-layout title="Cadastrar" description="Cadastre-se com seus dados" primaryButton="Cadastrar" secondaryButton="Logar" (emitirSubmit)="submit()" (emitirNavigate)="navigate()">
   <form [formGroup]="registerForm">
-    <app-primary-input formControlName="name" inputName="name" type="string" label="Nome" ></app-primary-input>
-    <app-primary-input formControlName="login" inputName="login" type="email" label="E-mail" ></app-primary-input>
-    <app-primary-input formControlName="password" inputName="password" type="password" label="Senha" ></app-primary-input>
+    <mat-form-field class="example-full-width">
+      <mat-label>Nome</mat-label>
+      <input matInput placeholder="Ex. João Silva" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Tipo de Usuário</mat-label>
+      <mat-select formControlName="userType">
+        <mat-option *ngFor="let type of userTypes" [value]="type.value">
+          {{type.label}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="registerForm.get('userType')?.hasError('required')">
+        Tipo de usuário é obrigatório
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>E-mail</mat-label>
+      <input matInput placeholder="Ex. joao@exemplo.com" formControlName="login">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Senha</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+      <button class="btn-pass" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Confirmar senha</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="confirmPassword">
+      <button class="btn-pass" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
   </form>
 </app-login-layout>
