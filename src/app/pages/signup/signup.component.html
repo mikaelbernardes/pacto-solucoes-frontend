@@ -1,0 +1,7 @@
+<app-login-layout title="Cadastrar" description="Cadastre-se com seus dados" primaryButton="Cadastrar" secondaryButton="Logar" (submit)="submit()" (navigate)="navigate()">
+  <form [formGroup]="registerForm">
+    <app-primary-input formControlName="name" inputName="name" type="string" label="Nome" ></app-primary-input>
+    <app-primary-input formControlName="login" inputName="login" type="email" label="E-mail" ></app-primary-input>
+    <app-primary-input formControlName="password" inputName="password" type="password" label="Senha" ></app-primary-input>
+  </form>
+</app-login-layout>

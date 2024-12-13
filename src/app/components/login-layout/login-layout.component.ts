@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from "@angular/core";
+import { Component, Output, EventEmitter, Input } from "@angular/core";
 
 @Component({
 	selector: "app-login-layout",
@@ -7,6 +7,10 @@ import { Component, Output, EventEmitter } from "@angular/core";
 	styleUrl: "./login-layout.component.scss",
 })
 export class LoginLayoutComponent {
+  @Input() title = "";
+  @Input() description = "";
+  @Input() primaryButton = "";
+  @Input() secondaryButton = "";
 	@Output("submit") onSubmit = new EventEmitter();
 	@Output("navigate") onNavigate = new EventEmitter();
 
