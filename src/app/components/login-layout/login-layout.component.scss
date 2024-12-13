@@ -1,18 +1,20 @@
 main {
   width: 100%;
-  height: 100%;
+  height: 99.9vh;
+  display: flex;
+  flex-direction: row;
 }
 
 .section-form {
-  width: 24%;
+  width: 28%;
   height: 100%;
   display: flex;
   align-items: start;
   justify-content: center;
-  background-color: var(--light-grey);
   flex-direction: column;
   padding: 48px;
   gap: 8px;
+  background-color: white;
 
   h2 {
     color: var(--dark-grey);
@@ -21,9 +23,10 @@ main {
   }
 
   button {
-    width: 240px;
+    width: 100%;
     height: 36px;
     border-radius: 6px;
+    margin-top: 12px;
     border: none;
     background-color: var(--primary);
     color: white;
@@ -33,7 +36,8 @@ main {
   }
 
   .register-button {
-    width: 240px;
+    margin-top: 4px;
+    width: 100%;
     height: 36px;
     border-radius: 6px;
     border: 1px solid var(--primary);
@@ -64,8 +68,14 @@ main {
   }
 
   .separator-line {
-    width: 100px;
+    width: 100%;;
     height: 1px;
     background-color: var(--medium-text);
   }
+}
+
+.section-folder {
+  width: 72%;
+  height: 100%;
+  background-color: var(--light-grey);
 }

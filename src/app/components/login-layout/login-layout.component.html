@@ -3,13 +3,13 @@
     <h2>Login</h2>
     <p>Entre com seu e-mail e senha</p>
     <ng-content></ng-content>
-    <button>Entrar</button>
+    <button (click)="submit()">Entrar</button>
     <div class="separator">
       <div class="separator-line"></div>
       <span>OU</span>
       <div class="separator-line"></div>
     </div>
-    <button class="register-button">Cadastre-se</button>
+    <button class="register-button" (click)="navigate()">Cadastre-se</button>
   </section>
   <section class="section-folder">
     <h1></h1>

@@ -1,0 +1,22 @@
+// biome-ignore lint/style/useImportType: <explanation>
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import type { LoginResponse } from "../types/loginResponse.type";
+import { tap } from "rxjs";
+
+@Injectable({
+	providedIn: "root",
+})
+export class LoginService {
+	constructor(private httpClient: HttpClient) {}
+
+	login(name: string, password: string) {
+		return this.httpClient
+			.post<LoginResponse>("/login", { name, password })
+			.pipe(
+				tap((value) => {
+					sessionStorage.setItem("auth-token", value.token);
+				}),
+			);
+	}
+}
