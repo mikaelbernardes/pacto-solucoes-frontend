@@ -1,0 +1,170 @@
+.new-vacancy-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+
+  h1 {
+    margin-bottom: 2rem;
+    color: #333;
+  }
+}
+
+.vacancy-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-weight: 500;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+      }
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .requirements-input {
+    display: flex;
+    gap: 0.5rem;
+
+    input {
+      flex: 1;
+    }
+
+    .add-requirement-btn {
+      padding: 0.75rem 1rem;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+
+      &:hover {
+        background: #218838;
+      }
+    }
+  }
+
+  .requirements-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+
+    .requirement-tag {
+      background: #f0f0f0;
+      padding: 0.5rem;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .remove-btn {
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 0 0.25rem;
+        font-size: 1.2rem;
+
+        &:hover {
+          color: #dc3545;
+        }
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .cancel-btn {
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      color: #666;
+
+      &:hover {
+        background: #e2e6ea;
+      }
+    }
+
+    .submit-btn {
+      background: #007bff;
+      border: none;
+      color: white;
+
+      &:hover {
+        background: #0056b3;
+      }
+
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.delete-btn {
+  background: #dc3545;
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    background: #c82333;
+  }
+}
+
+.status-select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: white;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+
+  option {
+    padding: 0.5rem;
+  }
+}

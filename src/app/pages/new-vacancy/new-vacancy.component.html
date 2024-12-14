@@ -1,0 +1,74 @@
+<div class="new-vacancy-container">
+  <h1>{{ isEditing ? 'Editar Vaga' : 'Criar Nova Vaga' }}</h1>
+
+  <form [formGroup]="vacancyForm" (ngSubmit)="onSubmit()" class="vacancy-form">
+    <div class="form-group">
+      <label for="title">Título da Vaga</label>
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        placeholder="Ex: Desenvolvedor Frontend Senior"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="description">Descrição</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="4"
+        placeholder="Descreva os detalhes da vaga..."
+      ></textarea>
+    </div>
+
+    @if (isEditing) {
+      <div class="form-group">
+        <label for="status">Status da Vaga</label>
+        <select id="status" formControlName="status" class="status-select">
+          @for (option of statusOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </div>
+    }
+
+    <div class="form-group">
+      <label>Requisitos</label>
+      <div class="requirements-input">
+        <input
+          type="text"
+          formControlName="newRequirement"
+          placeholder="Adicione um requisito"
+          (keyup.enter)="addRequirement()"
+        >
+        <button type="button" (click)="addRequirement()" class="add-requirement-btn">
+          Adicionar
+        </button>
+      </div>
+
+      <div class="requirements-list">
+        @for (requirement of requirements; track requirement; let i = $index) {
+          <div class="requirement-tag">
+            {{ requirement }}
+            <button type="button" (click)="removeRequirement(i)" class="remove-btn">
+              ×
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="cancel-btn" routerLink="/home">Cancelar</button>
+      @if (isEditing) {
+        <button type="button" class="delete-btn" (click)="deleteVacancy()">
+          Excluir Vaga
+        </button>
+      }
+      <button type="submit" [disabled]="!isFormValid" class="submit-btn">
+        {{ isEditing ? 'Salvar Alterações' : 'Publicar Vaga' }}
+      </button>
+    </div>
+  </form>
+</div>

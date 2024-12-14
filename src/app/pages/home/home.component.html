@@ -1,3 +1,45 @@
-<main>
+<main class="home-container">
+  <div class="search-container">
+    <div class="search-wrapper">
+      <input
+        type="text"
+        [ngModel]="searchTerm"
+        (ngModelChange)="onSearch($event)"
+        placeholder="Busque por vagas, empresas ou palavras-chave..."
+        class="search-input"
+      >
+      @if (isRecruiter) {
+        <button class="add-vacancy-button" (click)="navigateToNewVacancy()">
+          <i class="fas fa-plus"></i>
+          Nova Vaga
+        </button>
+      }
+    </div>
+  </div>
 
+  <div class="jobs-container">
+    @for (job of filteredVacancy; track job.id) {
+      <div class="job-card" [class.recruiter-card]="isRecruiter" (click)="handleCardClick(job)">
+        <div class="job-header">
+          <h2>{{ job.title }}</h2>
+        </div>
+
+        <p class="description">{{ job.description }}</p>
+
+        <div class="requirements">
+          @for (requirement of job.requirements; track requirement) {
+            <span class="tag">{{ requirement }}</span>
+          }
+        </div>
+
+        @if (!isRecruiter) {
+          <button class="apply-button">Candidatar-se</button>
+        }
+      </div>
+    } @empty {
+      <div class="no-jobs">
+        <p>Nenhuma vaga encontrada</p>
+      </div>
+    }
+  </div>
 </main>
