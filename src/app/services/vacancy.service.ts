@@ -10,7 +10,8 @@ export interface Vacancy {
   requirements: string[];
   user: {
     id: number;
-  }
+  };
+  hasApplied?: boolean;
 }
 
 @Injectable({
@@ -46,5 +47,19 @@ export class VacancysService {
 
   deleteVacancy(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.headers });
+  }
+
+  applyToVacancy(vacancyId: number): Observable<void> {
+    const userId = sessionStorage.getItem('id');
+
+    return this.http.post<void>(`${this.apiUrl}/apply`, {
+      vacancy: {
+        id: vacancyId
+      },
+      user: {
+        id: Number(userId)
+      },
+      status: "UNDER_REVIEW"
+    }, { headers: this.headers });
   }
 }

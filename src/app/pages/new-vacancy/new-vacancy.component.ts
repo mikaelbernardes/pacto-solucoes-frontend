@@ -3,6 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { VacancysService } from '../../services/vacancy.service';
+import { ApplicationService, Application } from '../../services/application.service';
+
+interface ApplicationStatus {
+  UNDER_REVIEW: string;
+  ACCEPTED: string;
+  REJECTED: string;
+  [key: string]: string;
+}
 
 @Component({
   selector: 'app-new-vacancy',
@@ -21,12 +29,22 @@ export class NewVacancyComponent implements OnInit {
     { value: 'OPEN', label: 'Aberta' },
     { value: 'CLOSED', label: 'Fechada' }
   ];
+  isViewOnly: boolean = false;
+  hasApplied: boolean = false;
+  currentApplication?: Application;
+
+  readonly applicationStatus: ApplicationStatus = {
+    'UNDER_REVIEW': 'Em análise',
+    'ACCEPTED': 'Aceito',
+    'REJECTED': 'Rejeitado'
+  };
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private vacancyService: VacancysService
+    private vacancyService: VacancysService,
+    private applicationService: ApplicationService
   ) {
     this.vacancyForm = this.fb.group({
       title: ['', [Validators.required]],
@@ -38,10 +56,18 @@ export class NewVacancyComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
+    const isApplyMode = this.route.snapshot.url.some(segment => segment.path === 'apply');
+
     if (id) {
-      this.isEditing = true;
       this.vacancyId = Number(id);
-      this.loadVacancy(this.vacancyId);
+      if (isApplyMode) {
+        this.isViewOnly = true;
+        this.checkApplicationStatus();
+        this.loadVacancyForView(this.vacancyId);
+      } else {
+        this.isEditing = true;
+        this.loadVacancy(this.vacancyId);
+      }
     }
   }
 
@@ -59,6 +85,41 @@ export class NewVacancyComponent implements OnInit {
         console.error('Erro ao carregar vaga:', error);
       }
     });
+  }
+
+  private loadVacancyForView(id: number) {
+    this.vacancyService.getVacancyById(id).subscribe({
+      next: (vacancy) => {
+        this.vacancyForm.patchValue({
+          title: vacancy.title,
+          description: vacancy.description,
+          status: vacancy.status
+        });
+        this.requirements = [...vacancy.requirements];
+        this.vacancyForm.disable(); // Desabilita todos os campos
+      },
+      error: (error) => {
+        console.error('Erro ao carregar vaga:', error);
+      }
+    });
+  }
+
+  private checkApplicationStatus() {
+    const userId = sessionStorage.getItem('id');
+    if (userId && this.vacancyId) {
+      this.applicationService.getUserApplications(Number(userId)).subscribe({
+        next: (applications) => {
+          const application = applications.find(app => app.vacancy.id === this.vacancyId);
+          if (application) {
+            this.hasApplied = true;
+            this.currentApplication = application;
+          }
+        },
+        error: (error) => {
+          console.error('Erro ao verificar status da candidatura:', error);
+        }
+      });
+    }
   }
 
   get isFormValid(): boolean {
@@ -124,6 +185,19 @@ export class NewVacancyComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erro ao excluir vaga:', error);
+        }
+      });
+    }
+  }
+
+  applyToVacancy() {
+    if (this.vacancyId) {
+      this.vacancyService.applyToVacancy(this.vacancyId).subscribe({
+        next: () => {
+          this.hasApplied = true;
+        },
+        error: (error) => {
+          console.error('Erro ao se candidatar:', error);
         }
       });
     }

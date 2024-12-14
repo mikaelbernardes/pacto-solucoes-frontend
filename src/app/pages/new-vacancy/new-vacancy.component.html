@@ -1,5 +1,5 @@
 <div class="new-vacancy-container">
-  <h1>{{ isEditing ? 'Editar Vaga' : 'Criar Nova Vaga' }}</h1>
+  <h1>{{ isViewOnly ? 'Detalhes da Vaga' : (isEditing ? 'Editar Vaga' : 'Criar Nova Vaga') }}</h1>
 
   <form [formGroup]="vacancyForm" (ngSubmit)="onSubmit()" class="vacancy-form">
     <div class="form-group">
@@ -60,15 +60,31 @@
     </div>
 
     <div class="form-actions">
-      <button type="button" class="cancel-btn" routerLink="/home">Cancelar</button>
+      <button type="button" class="cancel-btn" routerLink="/home">Voltar</button>
       @if (isEditing) {
         <button type="button" class="delete-btn" (click)="deleteVacancy()">
           Excluir Vaga
         </button>
       }
-      <button type="submit" [disabled]="!isFormValid" class="submit-btn">
-        {{ isEditing ? 'Salvar Alterações' : 'Publicar Vaga' }}
-      </button>
+      @if (isViewOnly) {
+        @if (hasApplied) {
+          <div class="application-status" [class]="currentApplication?.status?.toLowerCase()">
+            Status: {{ applicationStatus[currentApplication?.status || ''] }}
+          </div>
+        } @else {
+          <button
+            type="button"
+            class="apply-btn"
+            (click)="applyToVacancy()"
+          >
+            Candidatar-se
+          </button>
+        }
+      } @else {
+        <button type="submit" [disabled]="!isFormValid" class="submit-btn">
+          {{ isEditing ? 'Salvar Alterações' : 'Publicar Vaga' }}
+        </button>
+      }
     </div>
   </form>
 </div>

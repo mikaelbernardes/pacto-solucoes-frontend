@@ -30,4 +30,9 @@ export const routes: Routes = [
     component: NewVacancyComponent,
     canActivate: [AuthGuardService]
   },
+  {
+    path: 'new-vacancy/:id/apply',
+    component: NewVacancyComponent,
+    canActivate: [AuthGuardService]
+  },
 ];
