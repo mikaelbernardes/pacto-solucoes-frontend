@@ -5,11 +5,12 @@ import { Vacancy, VacancysService } from '../../services/vacancy.service';
 import { ApplicationService, type Application } from '../../services/application.service';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

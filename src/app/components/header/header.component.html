@@ -1,0 +1,15 @@
+<header class="header">
+  <div class="logo" routerLink="/home">
+    <h2>Pacto Soluções RH</h2>
+  </div>
+
+  <div class="actions">
+    <button mat-icon-button routerLink="/notifications" class="notification-btn">
+      <mat-icon>notifications</mat-icon>
+    </button>
+
+    <button mat-icon-button (click)="logout()" class="logout-btn">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</header>

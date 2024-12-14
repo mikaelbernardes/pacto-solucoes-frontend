@@ -47,27 +47,30 @@ export class SignupComponent {
 				Validators.required,
 				Validators.minLength(6),
 			]),
-      confirmPassword: new FormControl("", [
-				Validators.required,
-				Validators.minLength(6),
-			]),
 			userType: new FormControl("candidate", [Validators.required]),
 		});
 	}
 
-	submit() {
-		if (this.registerForm.valid) {
-			this.loginService
-				.signup(this.registerForm.value.name, this.registerForm.value.login, this.registerForm.value.password, this.registerForm.value.userType)
-				.subscribe({
-					next: () => {
-            this.router.navigate(["/login"]);
-            this.toastService.success("Sucesso ao cadastrar")
+  submit() {
+    if (this.registerForm.valid) {
+      this.loginService
+        .signup(
+          this.registerForm.value.name,
+          this.registerForm.value.login,
+          this.registerForm.value.password,
+          this.registerForm.value.userType
+        )
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/login']);
+            this.toastService.success('Sucesso ao cadastrar');
           },
-					error: () => this.toastService.error("Erro ao cadastrar"),
-				});
-		}
-	}
+          error: () => this.toastService.error('Erro ao cadastrar'),
+        });
+    } else {
+      this.toastService.error('Por favor, corrija os erros no formulário.');
+    }
+  }
 
 	navigate() {
 		this.router.navigate(["/login"]);

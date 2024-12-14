@@ -1,0 +1,45 @@
+<app-header></app-header>
+
+<div class="notifications-container">
+  <h1>Notificações</h1>
+
+  @if (loading) {
+    <div class="loading-state">
+      <mat-icon class="spinning">refresh</mat-icon>
+      <p>Carregando notificações...</p>
+    </div>
+  } @else if (error) {
+    <div class="error-state">
+      <mat-icon>error</mat-icon>
+      <p>{{ error }}</p>
+    </div>
+  } @else if (notifications.length === 0) {
+    <div class="empty-state">
+      <mat-icon>notifications_off</mat-icon>
+      <p>Nenhuma notificação encontrada</p>
+    </div>
+  } @else {
+    <div class="notifications-list">
+      @for (notification of notifications; track notification.id) {
+        <div
+          class="notification-card"
+          [class.unread]="!notification.read"
+          (click)="markAsRead(notification)"
+        >
+          <div class="notification-icon">
+            <mat-icon>{{ getNotificationIcon(notification.type) }}</mat-icon>
+          </div>
+
+          <div class="notification-content">
+            <p class="message">{{ notification.message }}</p>
+            <span class="date">{{ formatDate(notification.createdAt) }}</span>
+          </div>
+
+          @if (!notification.read) {
+            <div class="unread-indicator"></div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

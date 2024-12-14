@@ -4,13 +4,17 @@ import { SignupComponent } from "./pages/signup/signup.component";
 import { HomeComponent } from "./pages/home/home.component";
 import { AuthGuardService } from "./services/auth-guard.service";
 import { NewVacancyComponent } from "./pages/new-vacancy/new-vacancy.component";
+import { NotificationsComponent } from './pages/notifications/notifications.component';
 
 export const routes: Routes = [
 	{
 		path: "login",
 		component: LoginComponent,
 	},
-
+  {
+    path: "/",
+    redirectTo: "login"
+  },
 	{
 		path: "signup",
 		component: SignupComponent,
@@ -33,6 +37,11 @@ export const routes: Routes = [
   {
     path: 'new-vacancy/:id/apply',
     component: NewVacancyComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'notifications',
+    component: NotificationsComponent,
     canActivate: [AuthGuardService]
   },
 ];

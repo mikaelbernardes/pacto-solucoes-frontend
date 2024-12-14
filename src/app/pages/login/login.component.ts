@@ -41,15 +41,21 @@ export class LoginComponent {
 	}
 
 	submit() {
-		this.loginService
-			.login(this.loginForm.value.login, this.loginForm.value.password)
-			.subscribe({
-				next: () => {
-          this.router.navigate(["/home"])
-          this.toastService.success("Sucesso ao logar")
-        },
-				error: () => this.toastService.error("Erro ao logar"),
-			});
+		if (this.loginForm.valid) {
+			this.loginService
+				.login(this.loginForm.value.login, this.loginForm.value.password)
+				.subscribe({
+					next: () => {
+						this.router.navigate(["/home"]);
+						this.toastService.success("Sucesso ao logar");
+					},
+					error: () => {
+						this.toastService.error("Email ou senha inválidos");
+					},
+				});
+		} else {
+			this.toastService.error("Por favor, preencha todos os campos corretamente");
+		}
 	}
 
 	navigate() {

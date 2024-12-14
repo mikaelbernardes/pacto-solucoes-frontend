@@ -20,6 +20,13 @@ export class LoginService {
 					sessionStorage.setItem("id", value.id.toString());
 					sessionStorage.setItem("role", value.role);
 				}),
+        catchError((error) => {
+          const errorMessage = error.error?.message ||
+                             error.error?.error ||
+                             error.message ||
+                             'Erro ao realizar login';
+          return throwError(() => errorMessage);
+        })
 			);
 	}
 

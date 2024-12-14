@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { VacancysService } from '../../services/vacancy.service';
 import { ApplicationService, Application } from '../../services/application.service';
+import { HeaderComponent } from '../../components/header/header.component';
 
 interface ApplicationStatus {
   UNDER_REVIEW: string;
@@ -15,7 +16,7 @@ interface ApplicationStatus {
 @Component({
   selector: 'app-new-vacancy',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, HeaderComponent],
   templateUrl: './new-vacancy.component.html',
   styleUrl: './new-vacancy.component.scss'
 })
@@ -211,6 +212,7 @@ export class NewVacancyComponent implements OnInit {
       this.vacancyService.applyToVacancy(this.vacancyId).subscribe({
         next: () => {
           this.hasApplied = true;
+          this.router.navigate(['/home']);
         },
         error: (error) => {
           console.error('Erro ao se candidatar:', error);
