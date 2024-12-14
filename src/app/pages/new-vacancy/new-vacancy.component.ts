@@ -32,6 +32,7 @@ export class NewVacancyComponent implements OnInit {
   isViewOnly: boolean = false;
   hasApplied: boolean = false;
   currentApplication?: Application;
+  applications: {name: string; login: string;}[] = [];
 
   readonly applicationStatus: ApplicationStatus = {
     'UNDER_REVIEW': 'Em análise',
@@ -67,6 +68,7 @@ export class NewVacancyComponent implements OnInit {
       } else {
         this.isEditing = true;
         this.loadVacancy(this.vacancyId);
+        this.loadVacancyApplications();
       }
     }
   }
@@ -117,6 +119,20 @@ export class NewVacancyComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erro ao verificar status da candidatura:', error);
+        }
+      });
+    }
+  }
+
+  private loadVacancyApplications() {
+    if (this.vacancyId) {
+      this.applicationService.getVacancyApplications(this.vacancyId).subscribe({
+        next: (applications) => {
+          console.log('Applications:', applications);
+          this.applications = applications;
+        },
+        error: (error) => {
+          console.error('Erro ao carregar candidaturas:', error);
         }
       });
     }

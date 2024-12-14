@@ -87,4 +87,26 @@
       }
     </div>
   </form>
+
+  @if (isEditing && applications.length > 0) {
+    <div class="applications-section">
+      <h2>Candidatos ({{ applications.length }})</h2>
+      <div class="applications-list">
+        @for (application of applications; track application.login) {
+          <div class="application-card">
+            <div class="candidate-info">
+              <div class="candidate-name">
+                <i class="fas fa-user"></i>
+                <h3>{{ application.name || 'Nome não disponível' }}</h3>
+              </div>
+              <div class="candidate-email">
+                <i class="fas fa-envelope"></i>
+                <p>{{ application.login || 'Email não disponível' }}</p>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
 </div>

@@ -127,11 +127,18 @@ export class HomeComponent implements OnInit {
       this.vacancyService.applyToVacancy(jobId).subscribe({
         next: () => {
           const userId = sessionStorage.getItem('id');
-          if (userId) {
+          const userName = sessionStorage.getItem('name');
+          const userEmail = sessionStorage.getItem('email');
+
+          if (userId && userName && userEmail) {
             this.applications.push({
               id: 0, // ID será gerado pelo backend
               vacancy: { id: jobId },
-              user: { id: Number(userId) },
+              user: {
+                id: Number(userId),
+                name: userName,
+                email: userEmail
+              },
               status: 'UNDER_REVIEW'
             });
           }

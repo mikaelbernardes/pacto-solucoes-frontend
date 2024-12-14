@@ -9,6 +9,8 @@ export interface Application {
   };
   user: {
     id: number;
+    name: string;
+    email: string;
   };
   status: string;
 }
@@ -26,5 +28,9 @@ export class ApplicationService {
 
   getUserApplications(userId: number): Observable<Application[]> {
     return this.http.get<Application[]>(`${this.apiUrl}/user/${userId}`, { headers: this.headers });
+  }
+
+  getVacancyApplications(vacancyId: number): Observable<{name: string; login: string;}[]> {
+    return this.http.get<{name: string; login: string;}[]>(`${this.apiUrl}/${vacancyId}/applications/users`, { headers: this.headers });
   }
 }
